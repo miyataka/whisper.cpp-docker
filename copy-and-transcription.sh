@@ -11,6 +11,4 @@ fi
 
 IMAGE=`docker build -q .`
 
-# cp $INPUT_MP4_FILE_PATH .
-
 docker run -v $PWD:/usr/local/src/whisper.cpp/mnt -it $IMAGE entrypoint.sh ./mnt/$INPUT_MP4_FILE_NAME $LANG
