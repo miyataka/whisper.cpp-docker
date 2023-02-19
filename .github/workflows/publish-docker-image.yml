@@ -47,4 +47,4 @@ jobs:
           push: false # TODO change before release
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          platforms: linux/arm64,linux/amd64,darwin/amd64,darwin/arm64,windows/amd64
+          platforms: linux/arm64,linux/amd64
