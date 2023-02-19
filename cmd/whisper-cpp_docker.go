@@ -1,25 +1,30 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 )
 
-// main runs
+const preparedImage = "miyataka/whisper.cpp-docker:v0.9.1"
+
 func main() {
 	// TODO flag
-	// TODO error output
 	// TODO windows support
 	// TODO log
 
 	pwd := os.Getenv("PWD")
 	volumeOption := pwd + ":/usr/local/src/whisper.cpp/mnt"
 
-	cmd := exec.Command("docker", "run", "-v", volumeOption, "-it", "miyataka/whisper.cpp-docker:v0.9.0", "entrypoint.sh", "./mnt/speaking_sample.mp4", "ja")
-	fmt.Printf("%+v\n", cmd)
-	if err := cmd.Run(); err != nil {
-		fmt.Printf("%+v\n", err)
+	cmd := exec.Command("docker", "run", "-v", volumeOption, preparedImage, "entrypoint.sh", "./mnt/speaking_sample.mp4", "en")
+	var stdoutBuf, stderrBuf bytes.Buffer
+	cmd.Stdout = io.MultiWriter(os.Stdout, &stdoutBuf)
+	cmd.Stderr = io.MultiWriter(os.Stderr, &stderrBuf)
+	err := cmd.Run()
+
+	if err != nil {
+		fmt.Println(err.Error())
 	}
-	fmt.Println("end")
 }
