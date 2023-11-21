@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 )
 
-const preparedImage = "miyataka/whisper.cpp-docker:v1.4.3"
+const preparedImage = "miyataka/whisper.cpp-docker:v1.5.0"
 
 func main() {
 	// flag
